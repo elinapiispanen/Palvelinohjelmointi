@@ -1,0 +1,46 @@
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head>
+<title>Lisää sarja</title>
+<link type="text/css" rel="stylesheet" href="css/bootstrap.min.css"
+	th:href="@{css/bootstrap.min.css}" />
+<meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+</head>
+<body>
+	<h1>Sarja</h1>
+	<form action="#" th:action="@{/uusisarja}" th:object=${sarja}
+		method="post">
+		<p>
+			Nimi: <input type="text" th:field="${sarja.title}" />
+		</p>
+		<p>
+			Kausia: <input type="text" th:field="${sarja.title}" />
+		</p>
+		<p>
+			Alkoi: <input type="text" th:field="${sarja.yearstart}" />
+		</p>
+		<p>
+			Päättyi: <input type="text" th:field="${sarja.yearend}" />
+		</p>
+
+		<div style="clear: both; display: block; height: 10px;"></div>
+		<div style="width: 100px;">
+		<label for="palvelulista">Palvelu</label> <select id="palvelulista"
+			th:field="*{palvelu}" class="form-control">
+			<option th:each="palvelu: ${palvelut}"
+				th:value="palveluid" th:text="${palvelu.name}"></option>
+		</select>
+		<label for="statuslista">Status</label> <select id="statuslista"
+			th:field="*{status}" class="form-control">
+			<option th:each="status: ${statuses}"
+				th:value="status.statusid" th:text="${status.title}"></option>
+		</select>
+		</div>
+		<div style="clear: both; display: block; height: 10px;"></div>
+		
+		<input type="submit" value="Submit" class="btn btn-success" /> <input
+			type="reset" value="Reset" class="btn btn-danger" />
+	</form>
+
+</body>
+</html>
