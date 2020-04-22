@@ -20,7 +20,7 @@ public class Status {
 	private String title;
 	
 	@OneToMany(cascade = CascadeType.ALL, mappedBy = "status")
-	@JsonBackReference
+	// @JsonBackReference
 	private List<Sarja> sarjat;
 	
 	public Status() {}

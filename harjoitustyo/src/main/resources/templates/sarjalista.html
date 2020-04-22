@@ -1,28 +1,32 @@
 <!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+  $(document).ready(function(){
+      $("button").click(function(){
+        $("h1").hide();
+      });
+   });
+</script>
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 <title>Sarjat</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
 </head>
 <body>
-	
-	<div class="col-md-4">
-		<h1>Sarjat</h1>
-	</div>
 		<div class="col-md-4">
-		
+		<h1>Sarjat</h1>
+		</div>
+		<div class="col-md-4">
+		<h3 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]</h3>
 	</div>
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Sign Out" class="btn btn-danger"/>
+			<input type="submit" value="Kirjaudu ulos" class="btn btn-danger"/>
 		</form>
-	</div>
 
-	<div class="col-md-4" style="padding:20px 0">
-		
 	</div>
-	<table  class="table table-striped">
+	<table class="table table-striped">
 		<tr>
 			<th>Nimi</th>
 			<th>Kausia</th>
@@ -30,7 +34,7 @@
 			<th>Viimeisin kausi</th>
 			<th>Palvelu</th>
 			<th>Status</th>
-			
+			<th sec:authorize="hasRole('ADMIN')"> </th> 
 		</tr>
 
 		<tr th:each="sarja : ${sarjat}">
@@ -39,13 +43,15 @@
 			<td th:text="${sarja.yearstart}">alkoi</td>
 			<td th:text="${sarja.yearend}">päättyi</td>
 			<td th:text="${sarja.palvelu.name}">palvelu</td>
-			<td th:text="${sarja.status.title}">palvelu</td>
+			<td th:text="${sarja.status.title}">status</td>
 			
 	
-	<td><a th:href="@{/poistasarja/{id}(id=${sarja.id})}" class="btn btn-danger">Delete</a></td>
+	<td><a 
+	th:href="@{/poistasarja/{id}(id=${sarja.id})}" class="btn btn-danger">Delete</a></td>
 	<td><a th:href="@{/muokkaasarja/{id}(id=${sarja.id})}">Edit</a></td>
 	</tr>
 	</table>
-	<a href="/uusisarja" class="btn btn-success" >uusi sarja</a>
+	<button>Piilota teksti</button>
+	<a href="/uusisarja" class="btn btn-success" >Lisää uusi sarja</a>
 </body>
 </html>

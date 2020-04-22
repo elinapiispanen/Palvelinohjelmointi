@@ -4,6 +4,7 @@ import java.util.List;
 import java.util.Optional;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.access.prepost.PreAuthorize;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
@@ -31,6 +32,11 @@ public class SarjaController {
 	
 	@Autowired
 	private StatusRepository statusRepository;
+	
+	 @RequestMapping(value="/login")
+	    public String login() {	
+	        return "login";
+	    }	
 
 	@RequestMapping(value="/sarjalista")
 	public String showSarjat(Model model) {
@@ -73,13 +79,14 @@ public String poistaSarja(@PathVariable("id") Long sarjaId) {
 public String muokkaaSarja(@PathVariable("id") Long sarjaId, Model model) {
 	Optional<Sarja> sarja = sarjaRepository.findById(sarjaId);
 	model.addAttribute("sarja", sarja);
+	model.addAttribute("palvelut", palveluRepository.findAll());
+	model.addAttribute("statuses", statusRepository.findAll());
 	
 	return "muokkaasarja";
 }
 
 @RequestMapping(value = "/muokkaasarja/{id}", method = RequestMethod.POST)
 public String save(@ModelAttribute Sarja sarja) {
-	
 	sarjaRepository.save(sarja);
 	return "redirect:/sarjalista";
 }

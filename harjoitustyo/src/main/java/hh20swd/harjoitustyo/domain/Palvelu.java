@@ -20,7 +20,7 @@ public class Palvelu {
 	private String name;
 	
 	@OneToMany(cascade = CascadeType.ALL)
-	@JsonBackReference
+	// @JsonBackReference
 	private List<Sarja> sarjat;
 	
 	public Palvelu() {}
