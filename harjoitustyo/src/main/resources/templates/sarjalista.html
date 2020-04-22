@@ -1,31 +1,37 @@
 <!DOCTYPE HTML>
 <html xmlns:th="http://www.thymeleaf.org" xmlns:sec="http://www.thymeleaf.org/thymeleaf-extras-springsecurity5">
 <head>
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<script>
-  $(document).ready(function(){
-      $("button").click(function(){
-        $("h1").hide();
-      });
-   });
-</script>
+
 <link type="text/css" rel="stylesheet" href="css/bootstrap.min.css" th:href="@{css/bootstrap.min.css}" />
 <title>Sarjat</title>
 <meta http-equiv="Content-Type" content="text/html; charset=UTF-8" />
+<style>
+body {
+  background-image: url(../movie.jpg);
+  background-repeat: repeat-x;
+}
+</style>
 </head>
 <body>
+<header style="height: 200px">
+<div class="row">
 		<div class="col-md-4">
-		<h1>Sarjat</h1>
+		<h1>Kivat TV-sarjat</h1>
 		</div>
 		<div class="col-md-4">
 		<h3 th:inline="text">Tervetuloa [[${#httpServletRequest.remoteUser}]]</h3>
 	</div>
 	<div class="col-md-4" style="padding:20px 0">
 		<form th:action="@{/logout}" method="post">
-			<input type="submit" value="Kirjaudu ulos" class="btn btn-danger"/>
+			<input sec:authorize="hasAuthority('ADMIN')" type="submit" value="Kirjaudu ulos" class="btn btn-danger"/>
 		</form>
 
 	</div>
+	</div>
+	<div style="padding-top: 50px" >
+	<h4>Täältä löytyy kaikkea kivaa!</h4>
+	</div>
+	</header>
 	<table class="table table-striped">
 		<tr>
 			<th>Nimi</th>
@@ -34,7 +40,7 @@
 			<th>Viimeisin kausi</th>
 			<th>Palvelu</th>
 			<th>Status</th>
-			<th sec:authorize="hasRole('ADMIN')"> </th> 
+			<th sec:authorize="hasAuthority('ADMIN')"> </th> 
 		</tr>
 
 		<tr th:each="sarja : ${sarjat}">
@@ -46,12 +52,25 @@
 			<td th:text="${sarja.status.title}">status</td>
 			
 	
-	<td><a 
+	<td sec:authorize="hasAuthority('ADMIN')"><a 
 	th:href="@{/poistasarja/{id}(id=${sarja.id})}" class="btn btn-danger">Delete</a></td>
-	<td><a th:href="@{/muokkaasarja/{id}(id=${sarja.id})}">Edit</a></td>
+	<td sec:authorize="hasAuthority('ADMIN')"><a th:href="@{/muokkaasarja/{id}(id=${sarja.id})}">Edit</a></td>
 	</tr>
 	</table>
-	<button>Piilota teksti</button>
-	<a href="/uusisarja" class="btn btn-success" >Lisää uusi sarja</a>
+	
+	<a href="/uusisarja" class="btn btn-success" sec:authorize="hasAuthority('ADMIN')" >Lisää uusi sarja</a>
+	<button id="admin">Oletko admin?</button>
+	<div id="tila">
+	</div>
+	<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<script>
+$(document).ready(function(){
+    $("#admin").one('click', (function(){
+        	$("#tila").append("<p ><a href=&quot;@{/login}&quot;>Siirry kirjautumissivulle</a></p>")
+        	
+    }));
+  
+});
+</script>
 </body>
 </html>
