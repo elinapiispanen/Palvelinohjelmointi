@@ -91,9 +91,8 @@ public String save(@ModelAttribute Sarja sarja) {
 	return "redirect:/sarjalista";
 }
 	
-	@RequestMapping(value="/sarjat"
-			, method = RequestMethod.GET)
-			public @ResponseBody List<Sarja> sarjalistaRest() {
+	@RequestMapping(value="/sarjat", method = RequestMethod.GET)
+			public @ResponseBody List<Sarja> sarjaListRest() {
 			return (List<Sarja>) sarjaRepository.findAll();
 			}
 

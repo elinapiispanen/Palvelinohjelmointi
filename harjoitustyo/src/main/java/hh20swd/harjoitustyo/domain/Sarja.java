@@ -23,12 +23,12 @@ public class Sarja {
 		private int yearend;
 		
 		@ManyToOne
-		// @JsonManagedReference
+		@JsonManagedReference
 	    @JoinColumn(name = "palveluid")
 		private Palvelu palvelu;
 		
 		@ManyToOne
-		// @JsonManagedReference
+		@JsonManagedReference
 	    @JoinColumn(name = "statusid")
 		private Status status;
 	
