@@ -17,7 +17,7 @@ import hh20swd.harjoitustyo.domain.Sarja;
 import hh20swd.harjoitustyo.domain.SarjaRepository;
 import hh20swd.harjoitustyo.domain.Status;
 import hh20swd.harjoitustyo.domain.StatusRepository;
-import hh20swd.harjoitustyo.domain.UserRepository;
+
 
 
 
@@ -34,8 +34,7 @@ public class RepositoryTests {
 	private PalveluRepository palveluRepository;
 	@Autowired 
 	private StatusRepository statusRepository;
-	@Autowired 
-	private UserRepository userRepository;
+
 	
 	//Sarjarepotestit
 	 @Test
